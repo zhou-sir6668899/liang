@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        .container { position: relative; height: 100vh; }
+        #bg { width: 100%; height: 100%; }
+
+        .question {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: red;
+            text-shadow: 2px 2px 4px white;
+        }
+
+        .btn-yes {
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            padding: 15px 30px;
+            font-size: 20px;
+        }
+
+        .btn-no {
+            position: absolute;
+            padding: 15px 30px;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .angry {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: red;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            color: white;
+            animation: scale 1s infinite;
+        }
+
+        @keyframes scale {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="bg" src="https://example.com/pig-eating.jpg" alt="背景图">
+        <div class="question">梁伽月说自己是不是猪</div>
+        <button class="btn-yes" onclick="showFinal()">是的</button>
+        <button class="btn-no" id="btnNo">不是</button>
+
+        <div class="angry" id="angry">
+            <div>不是个蛋，重新选！</div>
+        </div>
+    </div>
+
+    <script>
+        let btnNo = document.getElementById('btnNo');
+
+        // 让"不是"按钮随机移动
+        setInterval(() => {
+            btnNo.style.left = Math.random() * 80 + '%';
+            btnNo.style.top = Math.random() * 80 + '%';
+        }, 800);
+
+        // 点击"不是"按钮处理
+        btnNo.onclick = () => {
+            document.getElementById('angry').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('angry').style.display = 'none';
+            }, 1500);
+        }
+
+        // 点击"是的"处理
+        function showFinal() {
+            document.body.innerHTML = `
+                <div style="
+                    background: green;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 40px;
+                    color: white;
+                ">
+                    你承认了
+                </div>
+            `;
+        }
+
+        // 预加载资源
+        window.onload = function() {
+            const bg = new Image();
+            bg.src = 'https://example.com/pig-eating.jpg';
+        }
+    </script>
+</body>
+</html>
